@@ -1,0 +1,31 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+// Script Alwaysahanz V5require("./database/module")//GLOBAL PAYMENTglobal.storename = "AlwaysaHanz||Developer"global.dana = "0831"global.qris = "-"// GLOBAL SETTINGglobal.owner = "6285143646739"global.namabot = "Finic V5"global.nomorbot = "6285143646739"global.namaCreator = "Alwaysahanz"global.linkyt = "https://www.youtube.com/@hanzinvidible" // btw lom ada cik yt nya, insyaallah kpn" tak upload 馃構馃構global.autoJoin = falseglobal.antilink = falseglobal.versisc = '5.0'// DELAY JPMglobal.delayjpm = 5500//GLOBAL THUMBglobal.codeInvite = ""global.imageurl = 'https://files.catbox.moe/utx8aq.jpg'global.thumb = 'https://files.catbox.moe/utx8aq.jpg'global.isLink = "https://whatsapp.com/channel/0029VasM9fEHLHQXV5P5Jm0d"global.packname = "Bugs"global.author = "Alwaysahanz"global.jumlah = "5"let file = require.resolve(__filename)fs.watchFile(file, () => {	fs.unwatchFile(file)	console.log(chalk.redBright(`Update ${__filename}`))	delete require.cache[file]
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
